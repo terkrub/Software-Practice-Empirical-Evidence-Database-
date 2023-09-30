@@ -1,6 +1,7 @@
 // pages/submit.js
 import { useState } from 'react';
 import styles from './styles/submitStyles.module.css';
+import Header from './component/Header';
 
 const SubmitArticle = () => {
   const [title, setTitle] = useState('');
@@ -20,6 +21,8 @@ const SubmitArticle = () => {
   };
 
   return (
+  <>
+    <Header/>
     <div className={styles.container}>
       <h1>Submit an Article</h1>
       <form onSubmit={handleSubmit}>
@@ -58,6 +61,7 @@ const SubmitArticle = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+  </>
   );
 };
 
