@@ -1,62 +1,63 @@
-// pages/submit.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './styles/submitStyles.module.css';
 
 const SubmitArticle = () => {
-  const [title, setTitle] = useState('');
-  const [authors, setAuthors] = useState('');
-  const [journal, setJournal] = useState('');
-  const [year, setYear] = useState('');
-  const [volume, setVolume] = useState('');
-  const [number, setNumber] = useState('');
-  const [pages, setPages] = useState('');
-  const [doi, setDoi] = useState('');
+  const [articleData, setArticleData] = useState({
+    title: '',
+    authors: '',
+    journal: '',
+    year: '',
+    volume: '',
+    number: '',
+    pages: '',
+    doi: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setArticleData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can handle the submission, e.g., send the data to an API.
-    const articleData = { title, authors, journal, year, volume, number, pages, doi };
     console.log('Article Data:', articleData);
   };
 
+  useEffect(() => {
+    // This is where you can handle side-effects, e.g., API requests.
+  }, [articleData]);
+
+  const renderInputField = (label, type, name) => (
+    <label className={styles.label} htmlFor={name}>
+      {label}
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={articleData[name]}
+        onChange={handleChange}
+        required
+        className={styles.input}
+      />
+    </label>
+  );
+
   return (
-    <div className={styles.container}>
-      <h1>Submit an Article</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title:
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        </label>
-        <label>
-          Authors:
-          <input type="text" value={authors} onChange={(e) => setAuthors(e.target.value)} required />
-        </label>
-        <label>
-          Journal Name:
-          <input type="text" value={journal} onChange={(e) => setJournal(e.target.value)} required />
-        </label>
-        <label>
-          Year of Publication:
-          <input type="number" value={year} onChange={(e) => setYear(e.target.value)} required />
-        </label>
-        <label>
-          Volume:
-          <input type="text" value={volume} onChange={(e) => setVolume(e.target.value)} required />
-        </label>
-        <label>
-          Number:
-          <input type="text" value={number} onChange={(e) => setNumber(e.target.value)} required />
-        </label>
-        <label>
-          Pages:
-          <input type="text" value={pages} onChange={(e) => setPages(e.target.value)} required />
-        </label>
-        <label>
-          DOI:
-          <input type="text" value={doi} onChange={(e) => setDoi(e.target.value)} required />
-        </label>
-        <button type="submit">Submit</button>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <h1 className={styles.h1}>Submit an Article</h1>
+        <form onSubmit={handleSubmit} className={styles.form}>
+        {renderInputField('Title:', 'text', 'title')}
+        {renderInputField('Authors:', 'text', 'authors')}
+        {renderInputField('Journal Name:', 'text', 'journal')}
+        {renderInputField('Year of Publication:', 'number', 'year')}
+        {renderInputField('Volume:', 'text', 'volume')}
+        {renderInputField('Number:', 'text', 'number')}
+        {renderInputField('Pages:', 'text', 'pages')}
+        {renderInputField('DOI:', 'text', 'doi')}
+        <button type="submit" className={styles.button}>Submit</button>
       </form>
+      </div>
     </div>
   );
 };
