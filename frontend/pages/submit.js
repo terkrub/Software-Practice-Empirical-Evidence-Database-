@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './styles/submitStyles.module.css';
+import Header from './component/Header';
 
 const SubmitArticle = () => {
   const [articleData, setArticleData] = useState({
@@ -23,10 +24,6 @@ const SubmitArticle = () => {
     console.log('Article Data:', articleData);
   };
 
-  useEffect(() => {
-    // This is where you can handle side-effects, e.g., API requests.
-  }, [articleData]);
-
   const renderInputField = (label, type, name) => (
     <label className={styles.label} htmlFor={name}>
       {label}
@@ -43,22 +40,25 @@ const SubmitArticle = () => {
   );
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <h1 className={styles.h1}>Submit an Article</h1>
-        <form onSubmit={handleSubmit} className={styles.form}>
-        {renderInputField('Title:', 'text', 'title')}
-        {renderInputField('Authors:', 'text', 'authors')}
-        {renderInputField('Journal Name:', 'text', 'journal')}
-        {renderInputField('Year of Publication:', 'number', 'year')}
-        {renderInputField('Volume:', 'text', 'volume')}
-        {renderInputField('Number:', 'text', 'number')}
-        {renderInputField('Pages:', 'text', 'pages')}
-        {renderInputField('DOI:', 'text', 'doi')}
-        <button type="submit" className={styles.button}>Submit</button>
-      </form>
+    <>
+      <Header />
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <h1 className={styles.h1}>Submit an Article</h1>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            {renderInputField('Title:', 'text', 'title')}
+            {renderInputField('Authors:', 'text', 'authors')}
+            {renderInputField('Journal Name:', 'text', 'journal')}
+            {renderInputField('Year of Publication:', 'number', 'year')}
+            {renderInputField('Volume:', 'text', 'volume')}
+            {renderInputField('Number:', 'text', 'number')}
+            {renderInputField('Pages:', 'text', 'pages')}
+            {renderInputField('DOI:', 'text', 'doi')}
+            <button type="submit" className={styles.button}>Submit</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
