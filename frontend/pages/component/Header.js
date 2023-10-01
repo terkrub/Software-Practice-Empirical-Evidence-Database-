@@ -12,10 +12,12 @@ const Header = () => {
           <li>
             <Link href="/about">About</Link>
           </li>
-          <li className={stylesComponet.navText}>SPEED</li>
         </ul>
-        
+        <div className={stylesComponet.logo}>
+          <h1> SPEED</h1>
+        </div>
       </nav>
     );
-  };
-export default Header
+};
+
+export default Header;

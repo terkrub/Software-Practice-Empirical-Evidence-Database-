@@ -1,96 +1,78 @@
 .wrapper {
-  background-color: blue;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Adjusted from center to flex-start */
-  min-height: 100vh;
-  margin: 0;
-  padding-left: 50px; /* Optional: Add some padding to ensure it's not flush against the edge */
-  padding-right: 50px;
+  justify-content: flex-start;
+  min-height: 100vh; /* Full viewport height */
+  background-color: blue;
+  padding: 0 5vw; /* 5% of viewport width as horizontal padding */
 }
 
 .container {
+  width: 100%;
+  max-width: 100vw; /* 50% of viewport width */
+  padding: 2vh 2vw; /* 2% of viewport height as vertical padding and 2% of viewport width as horizontal padding */
+  background-color: #f8f9fa;
+  border-radius: 1vw; /* 1% of viewport width */
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* Use viewport width for box-shadow */
+  transition: box-shadow 0.3s ease;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; 
-  max-width: none; 
-  transition: all 0.3s ease;
 }
 
 .container:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.6vw 1.2vw rgba(0, 0, 0, 0.2);
 }
 
 .h1 {
-  margin-bottom: 25px;
   font-size: 1.2em;
+  font-weight: 600;
   color: #4a4a4a;
   text-align: left;
-  font-weight: 600;
+  margin-bottom: 2vh; /* 2% of viewport height */
 }
 
 .form {
-  width: 100%;
+  width: 90%; /* 80% of parent container width */
   display: flex;
   flex-direction: column;
 }
 
 .label {
-  margin-bottom: 15px;
-  color: #4a4a4a;
   font-size: 1em;
   font-weight: 500;
+  color: #4a4a4a;
+  margin-bottom: 1vh;
+  padding-bottom: 1vh; 
 }
 
 .input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 8px;
+  margin-left: 20px;
+  padding: 1vh 1vw; /* Use viewport units for padding */
+  margin-top: 1vh; /* Use viewport height for margin-top */
+  border: 0.1vw solid #ccc; /* Use viewport width for border width */
+  border-radius: 0.6vw; /* Use viewport width for border-radius */
   transition: border 0.3s ease;
 }
 
 .input:focus {
-  border: 1px solid #333;
   outline: none;
+  border: 0.1vw solid #333;
 }
 
 .button {
-  padding: 12px 25px;
+  padding: 1vh 2.5vw; /* Use viewport units for padding */
+  margin-top: 2.5vh; /* Use viewport height for margin-top */
   background-color: #333;
   color: #fff;
   cursor: pointer;
   border: none;
-  border-radius: 6px;
-  margin-top: 25px;
+  border-radius: 0.6vw; /* Use viewport width for border-radius */
   transition: background-color 0.3s ease;
 }
 
 .button:hover {
   background-color: #555;
 }
-@media (max-width: 100px) {
-  .container {
-    width: 100%; /* Adjust the width to 100% on smaller screens */
-    max-width: none; /* Override the max-width set above */
-  }
 
-  .h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-  }
 
-  .label {
-    font-size: 0.9em;
-    margin-bottom: 12px;
-  }
-
-  .button {
-    margin-top: 20px;
-  }
-}

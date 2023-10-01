@@ -24,6 +24,9 @@ const SubmitArticle = () => {
     console.log('Article Data:', articleData);
   };
 
+  const currentYear = new Date().getFullYear();
+  const startYear = currentYear - 100;
+
   const renderInputField = (label, type, name) => (
     <label className={styles.label} htmlFor={name}>
       {label}
@@ -39,6 +42,27 @@ const SubmitArticle = () => {
     </label>
   );
 
+  const renderSelectField = (label, name) => (
+    <label className={styles.label} htmlFor={name}>
+      {label}
+      <select
+        id={name}
+        name={name}
+        value={articleData[name]}
+        onChange={handleChange}
+        required
+        className={styles.input}
+      >
+        <option value="">Select Year</option>
+        {Array.from({ length: 101 }, (_, index) => (
+          <option key={index} value={startYear + index}>
+            {startYear + index}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+
   return (
     <>
       <Header />
@@ -49,7 +73,7 @@ const SubmitArticle = () => {
             {renderInputField('Title:', 'text', 'title')}
             {renderInputField('Authors:', 'text', 'authors')}
             {renderInputField('Journal Name:', 'text', 'journal')}
-            {renderInputField('Year of Publication:', 'number', 'year')}
+            {renderSelectField('Year of Publication:', 'year')}
             {renderInputField('Volume:', 'text', 'volume')}
             {renderInputField('Number:', 'text', 'number')}
             {renderInputField('Pages:', 'text', 'pages')}
