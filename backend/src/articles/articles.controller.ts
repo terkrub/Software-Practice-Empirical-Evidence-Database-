@@ -7,7 +7,7 @@ export class ArticlesController {
 
   @Post()
   async create(@Body() article: any) {
-    return this.articlesService.create(article);
+    return this.articlesService.create(article.article);
   }
 
   @Get()

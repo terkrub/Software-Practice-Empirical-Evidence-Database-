@@ -8,6 +8,7 @@ export class ArticlesService {
 
   async create(article: any): Promise<any> {
     // Check if an article with the same DOI already exists
+    console.log(article)
     const existingArticle = await this.articleModel.findOne({ doi: article.doi }).exec();
 
     // If it does, mark isDuplicate as true

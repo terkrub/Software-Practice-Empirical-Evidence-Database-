@@ -23,9 +23,9 @@ const SubmitArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Article Data:', articleData);
+    console.log(articleData);
     try {
-      const res = await axios.post(`https://software-practice-empirical-evidence-database-5-rjg0194-autacnz.vercel.app/articles`,{article: articleData});
+      const res = await axios.post(`http://localhost:4000/articles`,{article: articleData});
       console.log(res)
     } catch (err) {
       console.log(err);
