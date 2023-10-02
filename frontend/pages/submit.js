@@ -25,7 +25,8 @@ const SubmitArticle = () => {
     e.preventDefault();
     console.log('Article Data:', articleData);
     try {
-      const res = await axios.get(`https://software-practice-empirical-evidence-database-5-rjg0194-autacnz.vercel.app/articles`,articleData);
+      const res = await axios.post(`https://software-practice-empirical-evidence-database-5-rjg0194-autacnz.vercel.app/articles`,{article: articleData});
+      console.log(res)
     } catch (err) {
       console.log(err);
     }
