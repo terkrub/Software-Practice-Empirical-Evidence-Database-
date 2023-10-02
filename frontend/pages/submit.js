@@ -12,6 +12,7 @@ const SubmitArticle = () => {
     number: '',
     pages: '',
     doi: '',
+    isDuplicate: false,
   });
 
   const handleChange = (e) => {
@@ -19,9 +20,15 @@ const SubmitArticle = () => {
     setArticleData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Article Data:', articleData);
+    try {
+      const res = await axios.get(``);
+    } catch (err) {
+      console.log(err);
+    }
+
   };
 
   const renderInputField = (label, type, name) => (
