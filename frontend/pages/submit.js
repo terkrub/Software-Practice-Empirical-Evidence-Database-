@@ -6,8 +6,8 @@ const SubmitArticle = () => {
   const [articleData, setArticleData] = useState({
     title: '',
     authors: '',
-    journal: '',
-    year: '',
+    journalName: '',
+    yearOfPublication: '',
     volume: '',
     number: '',
     pages: '',
