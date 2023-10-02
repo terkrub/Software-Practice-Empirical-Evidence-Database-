@@ -25,7 +25,7 @@ const SubmitArticle = () => {
     e.preventDefault();
     console.log(articleData);
     try {
-      const res = await axios.post("https://backend-e4sq9s1cr-rjg0194-autacnz.vercel.app/articles",{article: articleData});
+      const res = await axios.post("https://software-practice-empirical-evidence-database-54nb.vercel.app/articles",{article: articleData});
       console.log(res)
     } catch (err) {
       console.log(err);
