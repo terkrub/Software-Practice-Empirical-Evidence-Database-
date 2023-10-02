@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './styles/submitStyles.module.css';
 import Header from './component/Header';
+import axios from 'axios';
 
 const SubmitArticle = () => {
   const [articleData, setArticleData] = useState({
@@ -24,7 +25,7 @@ const SubmitArticle = () => {
     e.preventDefault();
     console.log('Article Data:', articleData);
     try {
-      const res = await axios.get(``);
+      const res = await axios.get(`https://software-practice-empirical-evidence-database-5-rjg0194-autacnz.vercel.app/articles`,articleData);
     } catch (err) {
       console.log(err);
     }
