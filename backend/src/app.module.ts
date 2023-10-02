@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ArticlesModule,
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot('mongodb+srv://admin:1234@speed.sj1cypd.mongodb.net/?retryWrites=true&w=majority'),
   ],
   controllers: [AppController, MyapiController],
   providers: [AppService],
