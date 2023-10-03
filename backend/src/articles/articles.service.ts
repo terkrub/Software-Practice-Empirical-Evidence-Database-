@@ -23,4 +23,17 @@ export class ArticlesService {
   async findAll(): Promise<any[]> {
     return this.articleModel.find().exec();
   }
+
+  async approveArticle(articleId: string): Promise<void> {
+    // Logic to approve an article (e.g., set modCheck to true)
+    const updatedArticle = await this.articleModel.updateOne({ _id: articleId }, { modCheck: true });
+  }
+
+  async rejectArticle(articleId: string): Promise<void> {
+    // Logic to reject an article (e.g., move to a different table or set a flag)
+    // Example:
+    // const article = await this.articleModel.findById(articleId);
+    // await this.rejectedArticleModel.create(article);
+    // await this.articleModel.deleteOne({ _id: articleId });
+  }
 }
