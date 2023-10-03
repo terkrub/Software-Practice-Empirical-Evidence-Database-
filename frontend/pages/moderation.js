@@ -27,7 +27,7 @@ const ModerationPage = () => {
     const handleApprove = async (article) => {
         console.log('Approved:', article);
         try {
-            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article.id}/modchecked`);
+            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/modchecked`);
             // Optionally: Update UI to reflect the change
           } catch (err) {
             console.error('Error approving article:', err);
