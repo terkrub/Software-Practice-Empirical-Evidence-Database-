@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -33,11 +33,32 @@ export class ArticlesService {
   }
 
   async rejectArticle(articleId: string): Promise<void> {
-    // Logic to reject an article (e.g., move to a different table or set a flag)
-    // Example:
-    const article = await this.articleModel.findById(articleId);
-    const rejectTable = new this.rejectedArticleModel(article);
-    await this.articleModel.deleteOne({ _id: articleId });
-    return rejectTable.save()
+    try {
+      // Find and log the article
+      const article = await this.articleModel.findOne({ _id: articleId }).lean();
+      console.log(article);
+  
+      // Check if the article was found
+      if (!article) {
+        throw new NotFoundException(`Article with ID ${articleId} not found`);
+      }
+  
+      // Create a new rejected article without _id and __v from the original article
+      const rejectTable = new this.rejectedArticleModel({
+        ...article,
+        _id: undefined,
+        __v: undefined,
+      });
+  
+      // Save the rejected article
+      await rejectTable.save();
+  
+      // Delete the original article
+      await this.articleModel.deleteOne({ _id: articleId });
+    } catch (error) {
+      // Log the error and rethrow it or handle it as appropriate
+      console.error(error);
+      throw new InternalServerErrorException('Error rejecting article');
+    }
   }
 }
