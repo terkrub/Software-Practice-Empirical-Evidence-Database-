@@ -36,7 +36,8 @@ export class ArticlesService {
     // Logic to reject an article (e.g., move to a different table or set a flag)
     // Example:
     const article = await this.articleModel.findById(articleId);
-    await this.rejectedArticleModel.create(article);
+    const rejectTable = new this.rejectedArticleModel(article);
     await this.articleModel.deleteOne({ _id: articleId });
+    return rejectTable.save()
   }
 }

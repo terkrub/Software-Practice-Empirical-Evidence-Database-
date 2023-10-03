@@ -35,9 +35,15 @@ const ModerationPage = () => {
           }
     };
 
-    const handleReject = (article) => {
+    const handleReject = async (article) => {
         console.log('Rejected:', article);
-        // Handle reject action (e.g., update data on server)
+        try {
+            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/reject`);
+            // Optionally: Update UI to reflect the change
+          } catch (err) {
+            console.error('Error approving article:', err);
+            // Optionally: Show error message to user
+          }
     };
 
     return (
