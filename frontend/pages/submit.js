@@ -27,6 +27,7 @@ const SubmitArticle = () => {
     try {
       const res = await axios.post("https://software-practice-empirical-evidence-database.vercel.app/articles",{article: articleData});
       console.log(res)
+      alert("Article submit successful")
     } catch (err) {
       console.log(err);
     }
@@ -81,11 +82,11 @@ const SubmitArticle = () => {
           <form onSubmit={handleSubmit} className={styles.form}>
             {renderInputField('Title:', 'text', 'title')}
             {renderInputField('Authors:', 'text', 'authors')}
-            {renderInputField('Journal Name:', 'text', 'journal')}
-            {renderSelectField('Year of Publication:', 'year')}
-            {renderInputField('Volume:', 'text', 'volume')}
-            {renderInputField('Number:', 'text', 'number')}
-            {renderInputField('Pages:', 'text', 'pages')}
+            {renderInputField('Journal Name:', 'text', 'journalName')}
+            {renderSelectField('Year of Publication:', 'yearOfPublication')}
+            {renderInputField('Volume:', 'number', 'volume')}
+            {renderInputField('Number:', 'number', 'number')}
+            {renderInputField('Pages:', 'number', 'pages')}
             {renderInputField('DOI:', 'text', 'doi')}
             <button type="submit" className={styles.button}>Submit</button>
           </form>
