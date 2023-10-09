@@ -27,9 +27,14 @@ export class ArticlesService {
     return this.articleModel.find().exec();
   }
 
-  async approveArticle(articleId: string): Promise<void> {
+  async modApproveArticle(articleId: string): Promise<void> {
     // Logic to approve an article (e.g., set modCheck to true)
     const updatedArticle = await this.articleModel.updateOne({ _id: articleId }, { modCheck: true });
+  }
+
+  async approveArticle(articleId: string): Promise<void> {
+    // Logic to approve an article (e.g., set modCheck to true)
+    const updatedArticle = await this.articleModel.updateOne({ _id: articleId }, { approve: true });
   }
 
   async rejectArticle(articleId: string): Promise<void> {
