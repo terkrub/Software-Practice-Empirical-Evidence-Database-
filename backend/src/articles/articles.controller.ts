@@ -16,6 +16,11 @@ export class ArticlesController {
   }
 
   @Post(':id/modchecked')
+  async modApproveArticle(@Param('id') id: string) {
+    return this.articlesService.modApproveArticle(id);
+  }
+
+  @Post(':id/approve')
   async approveArticle(@Param('id') id: string) {
     return this.articlesService.approveArticle(id);
   }
