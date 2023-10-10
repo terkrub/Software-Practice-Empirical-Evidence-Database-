@@ -3,10 +3,10 @@ name: Code Quality Check
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   lint:
@@ -21,9 +21,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-
-    - name: Install dependencies
-      run: npm ci
 
     - name: Run ESLint
       run: npx eslint .
