@@ -55,7 +55,7 @@ const ModerationPage = () => {
     return (
         <>
             <Header/>
-            <ArticleTable articleData={articleData} handleApprove={handleApprove} handleReject={handleReject}/>
+            <ArticleTable articleData={articleData} handleApprove={handleApprove} handleReject={handleReject} mod={true}/>
         </>
     );
 }
