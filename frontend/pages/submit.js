@@ -27,7 +27,7 @@ const SubmitArticle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:4000/articles`, { article: articleData });
+      const res = await axios.post("https://software-practice-empirical-evidence-database.vercel.app/articles",{article: articleData});
       if (res.status === 200) {
         setFeedback({ message: 'Article submitted successfully and is under review.', type: 'success' });
         setUnderReview(true);
@@ -114,6 +114,7 @@ return (
               {feedback && <p className={`${styles.feedback} ${styles[feedback.type]}`}>{feedback.message}</p>}
               {underReview && <p className={styles.review}>Your article is under review.</p>} 
           </div>
+
       </div>
   </>
   );

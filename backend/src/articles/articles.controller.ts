@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 
 @Controller('articles')
@@ -14,4 +14,25 @@ export class ArticlesController {
   async findAll() {
     return this.articlesService.findAll();
   }
+
+  @Post(':id/modchecked')
+  async modApproveArticle(@Param('id') id: string) {
+    return this.articlesService.modApproveArticle(id);
+  }
+
+  @Post(':id/approve')
+  async approveArticle(@Param('id') id: string) {
+    return this.articlesService.approveArticle(id);
+  }
+
+  @Post(':id/reject')
+  async rejectArticle(@Param('id') id: string) {
+    return this.articlesService.rejectArticle(id);
+  }
+
+  @Post(':id/update')
+  async updateArticle(@Param('id') id: string, @Body() article: any) {
+    return this.articlesService.updateArticle(id,article.article);
+  }
 }
+
