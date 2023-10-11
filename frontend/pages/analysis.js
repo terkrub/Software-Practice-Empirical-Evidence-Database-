@@ -27,7 +27,7 @@ const analysis = () => {
     const handleApprove = async (article) => {
         console.log('Approved:', article);
         try {
-            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/modchecked`);
+            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/approve`);
             // Optionally: Update UI to reflect the change
             fetchData();
 
@@ -44,7 +44,7 @@ const analysis = () => {
             await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/reject`);
             fetchData();
             
-            alert("Article reject")
+            alert("Article rejected")
             // Optionally: Update UI to reflect the change
           } catch (err) {
             console.error('Error approving article:', err);
@@ -55,7 +55,7 @@ const analysis = () => {
     return (
         <>
             <Header/>
-            <ArticleTable articleData={articleData} handleApprove={handleApprove} handleReject={handleReject}/>
+            <ArticleTable articleData={articleData} handleApprove={handleApprove} handleReject={handleReject} fetchData={fetchData}/>
         </>
     );
 }

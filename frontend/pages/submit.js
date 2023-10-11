@@ -75,7 +75,7 @@ const SubmitArticle = () => {
 
   return (
     <>
-      <Header />
+    <Header/>
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <h1 className={styles.h1}>Submit an Article</h1>
