@@ -29,4 +29,10 @@ export class ArticlesController {
   async rejectArticle(@Param('id') id: string) {
     return this.articlesService.rejectArticle(id);
   }
+
+  @Post(':id/update')
+  async updateArticle(@Param('id') id: string, @Body() article: any) {
+    return this.articlesService.updateArticle(id,article.article);
+  }
 }
+

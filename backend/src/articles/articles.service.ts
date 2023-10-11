@@ -9,6 +9,19 @@ export class ArticlesService {
     @InjectModel('RejectedArticle') private readonly rejectedArticleModel: Model<any>,
   ) {}
 
+  async updateArticle(articleId: string, updateData: any): Promise<any> {
+    const updatedArticle = await this.articleModel.findByIdAndUpdate(articleId, updateData, {
+      new: true,  // return the updated document
+      runValidators: true, // validate the update against the schema
+    }).exec();
+
+    if (!updatedArticle) {
+      throw new NotFoundException(`Article with ID ${articleId} not found`);
+    }
+
+    return updatedArticle;
+  }
+
   async create(article: any): Promise<any> {
     // Check if an article with the same DOI already exists
     console.log(article)
