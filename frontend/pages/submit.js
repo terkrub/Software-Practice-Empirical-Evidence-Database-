@@ -28,7 +28,8 @@ const SubmitArticle = () => {
     e.preventDefault();
     try {
       const res = await axios.post("https://software-practice-empirical-evidence-database.vercel.app/articles",{article: articleData});
-      if (res.status === 200) {
+      console.log(res)
+      if (res.status == 201) {
         setFeedback({ message: 'Article submitted successfully and is under review.', type: 'success' });
         setUnderReview(true);
       } else {
