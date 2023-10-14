@@ -6,3 +6,24 @@
 .articleContainer{
   width: 90%;
 }
+
+.editContainer {
+  display: inline-block;
+  overflow-y: auto;
+}
+
+.editContainer label,
+.editContainer input {
+  width: auto;
+  display: inline-block;
+  margin-bottom: 10px; /* Or the space you prefer between rows */
+}
+
+.editContainer label {
+  width: 10%;
+  font-weight: bold;
+}
+
+.editContainer input {
+  width: 40%;
+}
