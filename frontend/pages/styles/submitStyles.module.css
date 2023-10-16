@@ -62,14 +62,15 @@
 
 .input {
   width: 100%;
-  padding: 12px 20px;
+  padding: 5px 10px; /* Adjusted padding values */
   margin: 0.5vh 0;
   box-sizing: border-box;
   border: 1px solid #d1d1d1;
-  border-radius: 0.5vw;
+  border-radius: 0.3vw; /* Adjusted border-radius value */
   transition: all 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
+
 
 .input:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
