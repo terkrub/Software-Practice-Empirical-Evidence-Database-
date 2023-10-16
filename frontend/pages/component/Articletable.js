@@ -9,6 +9,9 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
     const [selectedYear, setSelectedYear] = useState('');
     const [authorSearchTerm, setAuthorSearchTerm] = useState('');
     const [editedArticleIndex, setEditedArticleIndex] = useState(null);
+    const [selectedMedthod, setSelectedMedthod] = useState('');
+    const [selectedResearch, setResearch] = useState('');
+    const [selectedYearRange, setSelectedYearRange] = useState('');
 
     const [title, setTitle] = useState('');
     const [authors, setAuthors] = useState('');
@@ -18,6 +21,10 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
     const [number, setNumber] = useState('');
     const [pages, setPages] = useState('');
     const [doi, setDoi] = useState('');
+    const [SE_practice, setSE_practice] = useState('');
+    const [claim, setclaim] = useState('');
+    const [result_of_evidence, setresult_of_evidence] = useState('');
+    const [type_of_research, settype_of_research] = useState('');
     
     const startEdit =(article)=>{
         setEditedArticleIndex(article._id)
@@ -29,6 +36,10 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         setNumber(article.number)
         setPages(article.pages)
         setDoi(article.doi)
+        setSE_practice('')
+        setclaim('')
+        setresult_of_evidence('')
+        settype_of_research('')
 
     }
 
@@ -36,6 +47,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         setSearchTerm('');
         setAuthorSearchTerm('');
         setSelectedYear('');
+        setSelectedMedthod('');
     };
 
     const getSortSymbol = (field) => {
@@ -47,9 +59,16 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         const titleMatch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
         const journalMatch = article.journalName.toLowerCase().includes(searchTerm.toLowerCase());
         const authorMatch = article.authors.some(author => author.toLowerCase().includes(authorSearchTerm.toLowerCase()));
-        const yearMatch = selectedYear ? article.yearOfPublication == selectedYear : true;
+        const yearMatch = selectedYearRange 
+        ? (
+            article.yearOfPublication >= parseInt(selectedYearRange.split('-')[0]) &&
+            article.yearOfPublication <= parseInt(selectedYearRange.split('-')[1])
+        )
+        : true;
+        const medthodMatch = selectedMedthod ? article.SE_practice == selectedMedthod: true;
+        const researchMatch = selectedResearch ? article.type_of_research == selectedResearch: true;
 
-        return (titleMatch || journalMatch) && authorMatch && yearMatch;
+        return (titleMatch || journalMatch) && authorMatch && yearMatch && medthodMatch && researchMatch;
     });
 
     const handleSort = (field) => {
@@ -93,11 +112,16 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
             number: number,
             pages: pages,
             doi: doi,
+            SE_practice: SE_practice,
+            claim:claim,
+            result_of_evidence: result_of_evidence,
+            type_of_research:type_of_research
         }
 
         try {
             const res = await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${editedArticleIndex}/update`,{article: updateData});
             console.log(res)
+            handleApprove(editedArticleIndex)
             alert("Article updated successful")
             setEditedArticleIndex(null)
             fetchData()
@@ -108,6 +132,22 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
     }
 
     const uniqueYears = [...new Set(articleData.map(article => article.yearOfPublication))].sort();
+    const medthod = [...new Set(articleData.map(article => article.SE_practice))].sort();
+    const research = [...new Set(articleData.map(article => article.type_of_research))].sort();
+
+    const minYear = Math.min(...articleData.map(article => article.yearOfPublication));
+    const maxYear = Math.max(...articleData.map(article => article.yearOfPublication));
+
+    const generateYearRanges = (startYear, endYear, range = 5) => {
+        let yearRanges = [];
+        for (let i = startYear; i <= endYear; i += range) {
+            yearRanges.push(`${i}-${i + range - 1}`);
+        }
+        return yearRanges;
+    };
+    
+    const yearRanges = generateYearRanges(minYear, maxYear);
+    
 
     return (
         <div className={stylesComponet.container}>
@@ -126,9 +166,18 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                                     value={authorSearchTerm} 
                                     onChange={e => setAuthorSearchTerm(e.target.value)} 
                                 />
-                                <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
-                                    <option value=''>Select Year</option>
-                                    {uniqueYears.map(year => <option key={year} value={year}>{year}</option>)}
+                                <select value={selectedYearRange} onChange={e => setSelectedYearRange(e.target.value)}>
+                                    <option value=''>Select Year Range</option>
+                                    {yearRanges.map(range => <option key={range} value={range}>{range}</option>)}
+                                </select>
+
+                                <select value={selectedMedthod} onChange={e => setSelectedMedthod(e.target.value)}>
+                                    <option value=''>Select SE Medthod</option>
+                                    {medthod.map(medthod => <option key={medthod} value={medthod}>{medthod}</option>)}
+                                </select>
+                                <select value={selectedResearch} onChange={e => setResearch(e.target.value)}>
+                                    <option value=''>Select Research type</option>
+                                    {research.map(research => <option key={research} value={research}>{research}</option>)}
                                 </select>
                                 <button onClick={clearFilters} className='btn btn-secondary'>Clear Filters</button></td>
                         </tr>
@@ -141,6 +190,8 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                             <th onClick={() => handleSort('number')} style={sortableColumnStyle}>Number {getSortSymbol('number')}</th>
                             <th onClick={() => handleSort('pages')} style={sortableColumnStyle}>Pages {getSortSymbol('pages')}</th>
                             <th onClick={() => handleSort('doi')} style={sortableColumnStyle}>DOI {getSortSymbol('doi')}</th>
+                            {!handleApprove && !handleReject &&<th>SE Medthod</th>}
+                            {!handleApprove && !handleReject &&<th>Type of Research</th>}
                             {handleApprove && handleReject &&
                                 <th onClick={() => handleSort('dateSubmitted')} style={sortableColumnStyle}>Date Submitted {getSortSymbol('dateSubmitted')}</th>}
                             {handleApprove && handleReject &&
@@ -152,6 +203,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
 
                     <tbody>
                         {sortedData.map((article, index) => (
+                            <>
                             
                             <tr key={index}>
                                 <td>{editedArticleIndex == article._id ? 
@@ -186,6 +238,8 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                                     <input value={doi} onChange={e => setDoi(e.target.value)} /> :
                                     article.doi}
                                 </td>
+                                {!handleApprove && !handleReject &&<td>{article.SE_practice}</td>}
+                                {!handleApprove && !handleReject &&<td>{article.type_of_research}</td>}
                                 {handleApprove && handleReject &&<td>{new Date(article.dateSubmitted).toLocaleDateString()}</td>}
                                 {handleApprove && handleReject &&
                                 <td>{article.isDuplicate ? 'Yes' : 'No'}</td>}
@@ -202,20 +256,49 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                                         <button onClick={()=>{handleSave()}} className='btn btn-success'>Save</button>
                                         <button onClick={()=>{setEditedArticleIndex(null)}} className='btn btn-danger'>Cancel</button>
                                     </>:
-                                    <div className="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" className="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
-                                            Actions
-                                        </button>
-                                        <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li><a className="dropdown-item text-success" onClick={()=>{handleApprove(article)}}>Approve</a></li>
-                                            <li><a className="dropdown-item text-warning" onClick={()=>{startEdit(article)}}>Edit</a></li>
-                                            <li><a className="dropdown-item text-danger" onClick={()=>{handleReject(article)}}>Reject</a></li>
-                                        </ul>
-                                    </div>
+                                    <button onClick={()=>{startEdit(article)}} className='btn btn-danger'>Edit</button>
                                     }
                                 </td>}
 
                             </tr>
+                            {editedArticleIndex == article._id ? 
+                                    <td colSpan="100%">
+                                        <div className={stylesComponet.editContainer} style={{
+                                                    backgroundColor: '#F2ECEC',
+                                                    width: '100%',
+                                                    height: 'auto',
+                                                    padding: '20px',
+                                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                                    borderRadius: '5px'}}
+                                        >
+                                            <label >Title: </label>
+                                            <input value={title} onChange={e => setTitle(e.target.value)} />
+                                            <label>Authors: </label>
+                                            <input value={authors} onChange={e => setAuthors(e.target.value)} />
+                                            <label>Journal Name: </label>
+                                            <input value={journalName} onChange={e => setJournalName(e.target.value)} />
+                                            <label>Year Of Publication: </label>
+                                            <input type="number" value={yearOfPublication} onChange={e => setYearOfPublication(e.target.value)} />
+                                            <label>Volume: </label>
+                                            <input type="number" value={volume} onChange={e => setVolume(e.target.value)} /> 
+                                            <label>Article number: </label>
+                                            <input type="number" value={number} onChange={e => setNumber(e.target.value)} />
+                                            <label>Pages: </label>
+                                            <input type="number" value={pages} onChange={e => setPages(e.target.value)} />
+                                            <label>DOI: </label>
+                                            <input value={doi} onChange={e => setDoi(e.target.value)} />
+                                            <label>SE practice: </label>
+                                            <input value={SE_practice} onChange={e => setSE_practice(e.target.value)} />
+                                            <label>Claim: </label>
+                                            <input value={claim} onChange={e => setclaim(e.target.value)} />
+                                            <label>Result of evidence: </label>
+                                            <input value={result_of_evidence} onChange={e => setresult_of_evidence(e.target.value)} />
+                                            <label>Type of research: </label>
+                                            <input value={type_of_research} onChange={e => settype_of_research(e.target.value)} />
+                                        </div>
+                                    </td>
+                            :""}
+                            </>
                         ))}
                     </tbody>
                     

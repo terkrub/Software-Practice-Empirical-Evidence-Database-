@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "echo \"No tests to run\""
+  },
   "dependencies": {
     "bootstrap": "^4.6.0",
     "react-bootstrap": "^2.9.0"

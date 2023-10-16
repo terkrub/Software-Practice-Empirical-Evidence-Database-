@@ -20,7 +20,7 @@ const Register = () => {
         }
 
         try {
-            const res = await axios.post('https://software-practice-empirical-evidence-database.vercel.app/register', { email, password });
+            const res = await axios.post('https://software-practice-empirical-evidence-database.vercel.app/users/register', { email, password });
             if (res.data.stus == 'Success') {
                 console.log(res.data.stus);
                 localStorage.setItem('user', email);

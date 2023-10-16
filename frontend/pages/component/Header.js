@@ -9,8 +9,10 @@ const Header = () => {
   const [localUser, setLocalUser] = useState(null);
   const [mod, setMod] = useState(false);
   const [analysis, setAnalysis] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const modId = ["mod@gmail.com"]
   const analysisId = ["analysis@gmail.com"]
+  const adminId = ["admin@gmail.com"]
 
   useEffect(() => {
     console.log("useEffect is running!");
@@ -23,6 +25,7 @@ const Header = () => {
   useEffect(() => {
     setMod(modId.includes(localUser))
     setAnalysis(analysisId.includes(localUser))
+    setAdmin(adminId.includes(localUser))
   }, [localUser]);
 
   const handleLogout = () => {
@@ -39,8 +42,13 @@ const Header = () => {
             <div className="navbar-nav">
               <a className={curentPage == "home"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("home")} aria-current="page" href="/">Home</a>
               <a className={curentPage == "submit"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("submit")} href="/submit">Submit Article</a>
-              {mod? <a className={curentPage == "mod"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("mod")} aria-current="page" href="/moderation">moderation</a>:""}
-              {analysis? <a className={curentPage == "analysis"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("analysis")} aria-current="page" href="/analysis">analysis</a>:""}
+              {mod || admin ? (
+                <a className={(curentPage === "mod" || curentPage === "admin") ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("mod")} aria-current="page" href="/moderation">Moderation</a>
+              ) : null}
+              {analysis || admin ? (
+                <a className={(curentPage === "analysis" || curentPage === "admin") ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("analysis")} aria-current="page" href="/analysis">Analysis</a>
+              ) : null}
+              
 
             </div>
             {localUser ? 

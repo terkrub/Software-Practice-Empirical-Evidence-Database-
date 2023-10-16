@@ -27,11 +27,10 @@ const analysis = () => {
     const handleApprove = async (article) => {
         console.log('Approved:', article);
         try {
-            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article._id}/approve`);
+            await axios.post(`https://software-practice-empirical-evidence-database.vercel.app/articles/${article}/approve`);
             // Optionally: Update UI to reflect the change
             fetchData();
 
-            alert("Article Approved")
           } catch (err) {
             console.error('Error approving article:', err);
             // Optionally: Show error message to user
