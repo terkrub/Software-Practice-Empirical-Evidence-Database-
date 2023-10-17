@@ -79,4 +79,8 @@ export class ArticlesService {
       throw new InternalServerErrorException('Error rejecting article');
     }
   }
+
+  async deletedArticle(articleId: string): Promise<void>{
+    await this.articleModel.deleteOne({ _id: articleId });
+  }
 }

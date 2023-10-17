@@ -34,5 +34,10 @@ export class ArticlesController {
   async updateArticle(@Param('id') id: string, @Body() article: any) {
     return this.articlesService.updateArticle(id,article.article);
   }
+
+  @Post(':id/delete')
+  async deletedArticle(@Param('id') id: string) {
+    return this.articlesService.deletedArticle(id);
+  }
 }
 
