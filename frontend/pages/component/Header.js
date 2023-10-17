@@ -43,13 +43,14 @@ const Header = () => {
               <a className={curentPage == "home"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("home")} aria-current="page" href="/">Home</a>
               <a className={curentPage == "submit"? "nav-link active": "nav-link"} onClick={()=>setCurentPage("submit")} href="/submit">Submit Article</a>
               {mod || admin ? (
-                <a className={(curentPage === "mod" || curentPage === "admin") ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("mod")} aria-current="page" href="/moderation">Moderation</a>
+                <a className={curentPage =="mod"? "nav-link active" : "nav-link"} onClick={() => setCurentPage("mod")} aria-current="page" href="/moderation">Moderation</a>
               ) : null}
               {analysis || admin ? (
-                <a className={(curentPage === "analysis" || curentPage === "admin") ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("analysis")} aria-current="page" href="/analysis">Analysis</a>
+                <a className={curentPage == "analysis" ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("analysis")} aria-current="page" href="/analysis">Analysis</a>
               ) : null}
-              
-
+              {admin ? (
+                <a className={curentPage == "analysis" ? "nav-link active" : "nav-link"} onClick={() => setCurentPage("admin")} aria-current="page" href="/admin">Article DB</a>
+              ) : null}
             </div>
             {localUser ? 
             <div className="col-md-10 text-end">
