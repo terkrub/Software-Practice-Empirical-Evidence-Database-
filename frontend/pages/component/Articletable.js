@@ -58,7 +58,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         return sortOrder === 'asc' ? '↑' : '↓';
     };
     
-    const filteredData = articleData.filter(article => {
+    const filteredData = articleData ? articleData.filter(article => {
         const titleMatch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
         const journalMatch = article.journalName.toLowerCase().includes(searchTerm.toLowerCase());
         const authorMatch = article.authors.some(author => author.toLowerCase().includes(authorSearchTerm.toLowerCase()));
@@ -72,7 +72,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         const researchMatch = selectedResearch ? article.type_of_research == selectedResearch: true;
 
         return (titleMatch || journalMatch) && authorMatch && yearMatch && medthodMatch && researchMatch;
-    });
+    }):[];
 
     const handleSort = (field) => {
         if (sortField === field) {
@@ -134,12 +134,11 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
         
     }
 
-    const uniqueYears = [...new Set(articleData.map(article => article.yearOfPublication))].sort();
-    const medthod = [...new Set(articleData.map(article => article.SE_practice))].sort();
-    const research = [...new Set(articleData.map(article => article.type_of_research))].sort();
+    const medthod = articleData?[...new Set(articleData.map(article => article.SE_practice))].sort():[];
+    const research = articleData?[...new Set(articleData.map(article => article.type_of_research))].sort():[];
 
-    const minYear = Math.min(...articleData.map(article => article.yearOfPublication));
-    const maxYear = Math.max(...articleData.map(article => article.yearOfPublication));
+    const minYear =articleData? Math.min(...articleData.map(article => article.yearOfPublication)):0;
+    const maxYear = articleData?Math.max(...articleData.map(article => article.yearOfPublication)):0;
 
     const generateYearRanges = (startYear, endYear, range = 5) => {
         let yearRanges = [];
@@ -205,7 +204,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                     </thead>
 
                     <tbody>
-                        {sortedData.map((article, index) => (
+                        {sortedData? sortedData.map((article, index) => (
                             <>
                             
                             <tr key={index}>
@@ -302,7 +301,7 @@ const ArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData
                                     </td>
                             :""}
                             </>
-                        ))}
+                        )):""}
                     </tbody>
                     
                 </table>
