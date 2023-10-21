@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import styles from './styles/submitStyles.module.css';
 import Header from './component/Header';
 import axios from 'axios';
-
 const SubmitArticle = () => {
   const [articleData, setArticleData] = useState({
     title: '',

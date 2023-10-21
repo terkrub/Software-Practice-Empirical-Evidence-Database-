@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import stylesComponet from './stylesComponet/articleTableStyles.module.css';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
+
 
 const AdminArticleTable = ({ articleData, handleApprove, handleReject, mod, fetchData }) => {
     const [sortField, setSortField] = useState(null);
@@ -327,5 +330,13 @@ const AdminArticleTable = ({ articleData, handleApprove, handleReject, mod, fetc
         </div>
     );
 }
+
+AdminArticleTable.propTypes = {
+    articleData: PropTypes.array.isRequired,
+    handleApprove: PropTypes.func.isRequired,
+    handleReject: PropTypes.func.isRequired,
+    mod: PropTypes.bool.isRequired,
+    fetchData: PropTypes.func.isRequired
+};
 
 export default AdminArticleTable;
